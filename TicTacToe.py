@@ -81,11 +81,6 @@ def isWinner(board, letter):
     (board[1] == letter and board[5] == letter and board[9] == letter) or
     (board[3] == letter and board[5] == letter and board[7] == letter))
     
-# If winner, announce winner
-
-if isWinner == True:
-    print(letter + ' wins!')
-
 ### Game Flow
     
 # Ask player names
