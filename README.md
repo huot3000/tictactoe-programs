@@ -1,3 +1,3 @@
-# Two-Player Tic Tac Toe
+# Tic Tac Toe Programs
 
-Basic two-player tic-tac-toe program written for my Recurse Center application.
+Two basic tic-tac-toe programs (two human players; one player vs. bot) written for my Recurse Center application.
