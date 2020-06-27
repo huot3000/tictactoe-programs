@@ -1,4 +1,4 @@
-# Two-Player Tic Tac Toe Game
+# One-Player Tic Tac Toe Game (Bot Opponent)
 
 # Setup
 
@@ -19,30 +19,21 @@ def drawBoard():
 
 # Player setup
 
-def assignPlayers():
-    # Ask names
-    global player1, player2
+def getPlayerName():
+    # Ask player name
+    global player
     print('We\'re going to play tic-tac-toe!')
     time.sleep(0.5)
     print('')
-    print('This is a two player game. Get a friend!')
+    print('What\'s your name')
+    player = str(input())
+    print('')
+    while player == '':
+        print('Enter your name')
+        player = str(input())
     time.sleep(0.5)
     print('')
-    print('What is the name of the first player?')
-    player1 = str(input())
-    print('')
-    while player1 == '':
-        print('Enter a name')
-        player1 = str(input())
-    time.sleep(0.5)
-    print('What is the name of the second player?')
-    player2 = str(input())
-    print('')
-    while player2 == '':
-        print('Enter a name')
-        player2 = str(input())
-    print('')
-    print('Hi, ' + player1 + ' and ' + player2 +'!')
+    print('Hi, ' + player + '!')
 
 # Randomly assign X or O
 
@@ -51,23 +42,18 @@ def assignXO():
     global turn
     if rand == 1:
         time.sleep(0.5)
-        print(player1 + ', you\'re X. ' + player2 + ', you\'re O.')
+        print(player + ', you\'re X. The computer is O.')
         time.sleep(0.5)
         print('')
-        print('X goes first. ' + player1 +', you start.')
-        turn = player1
+        print('X goes first. ' + player +', you start.')
+        turn = player
     else:
         time.sleep(0.5)
-        print(player1 + ', you\'re O. ' + player2 + ', you\'re X.')
+        print(player + ', you\'re O. The computer is X.')
         time.sleep(0.5)
         print('')
-        print('X goes first. ' + player2 +', you start.')
-        turn = player2
-
-# Check if case free
-
-def isCaseFree():
-    return board[move] == ' '
+        print('The computer goes first.')
+        turn = 'bot'
 
 # Check if winner
 
@@ -84,7 +70,7 @@ def isWinner(board, letter):
 ### Game Flow
     
 # Ask player names
-assignPlayers()
+getPlayerName()
 time.sleep(0.5)
 print('')
 
@@ -100,17 +86,25 @@ letter = 'X'
 for i in range(9):
     print('')
     drawBoard()
-    print('Make your move, ' + str(turn) + '. Place your ' + str(letter) + ' in a case (1 to 9).')
-    move = int(input()) # Ask for move
-
-    while not isCaseFree():  # Check if case is free
-        print('You can\'t pick this one! Try again.')
-        move = int(input())
+    if turn == player:
+        print('Make your move, ' + str(turn) + '. Place your ' + str(letter) + ' in a case (1 to 9).')
+        move = int(input()) # Ask for move
+        while board[move] != ' ':  # Check if case is free
+            print('You can\'t pick this one! Try again.')
+            move = int(input())
         
-    board[move] = letter    # Record move
+        board[move] = letter    # Record move
 
-    win = isWinner(board, letter) # Check if there's a win
-    if win == True:
+    else:
+        print('The bot is making a move')
+        move = random.randint(1,10) # Bot picks random number between 1 and 9
+        while board[move] != ' ':  # Check if case is free
+            move = random.randint(1,10)
+
+        board[move] = letter    # Record move
+
+
+    if isWinner(board, letter):
         print('')
         drawBoard()
         print('')
@@ -125,11 +119,16 @@ for i in range(9):
         print('')
         time.sleep(5)
         break
-    elif turn == player1: #Switching players
-        turn = player2
+    elif turn == player: #Switching players
+        turn = 'bot'
     else:
-        turn = player1
+        turn = player
     if letter == 'X':
         letter = 'O'
     else:
         letter = 'X'
+        
+
+    
+
+
